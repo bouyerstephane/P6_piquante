@@ -1,15 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
-const app = express();
 
 mongoose.connect("mongodb+srv://steph:vcmp@cluster0.wlqxa.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    { useNewUrlParser: true,
-        useUnifiedTopology: true })
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,6 +25,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
 
