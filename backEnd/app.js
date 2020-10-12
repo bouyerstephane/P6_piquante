@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require("helmet");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -6,7 +7,7 @@ const path = require('path');
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
-mongoose.connect("mongodb+srv://steph:vcmp@cluster0.wlqxa.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority",
+mongoose.connect("mongodb+srv://steph:vcmp@cluster0.wlqxa.gcp.mongodb.net/piquantes?retryWrites=true&w=majority",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -15,6 +16,8 @@ mongoose.connect("mongodb+srv://steph:vcmp@cluster0.wlqxa.gcp.mongodb.net/<dbnam
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
+
+app.use(helmet());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
