@@ -1,11 +1,12 @@
 const multer = require('multer');
 
+// récupère l'extention de l'image
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
     'image/png': 'png'
 };
-
+// reformatage du nom de l'image, puis stockage dans le dossier images
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, 'images');
